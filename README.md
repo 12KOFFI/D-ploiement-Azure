@@ -1,3 +1,7 @@
+# lien vers l'application 
+
+https://myapp-azure-detail-ghfpdhdbbddqc7am.southafricanorth-01.azurewebsites.net/
+
 # Azure-MERN-Boilerplate
 A very basic boilerplate for an Azure ready MERN app
 
