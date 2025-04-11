@@ -4,6 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+   "test": "echo \"No tests yet\"" ,
+
     "start": "node server.js"
   },
   "author": "",
