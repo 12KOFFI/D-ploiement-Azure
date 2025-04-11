@@ -6,17 +6,16 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bestShows: {} // ← initialise avec un objet, pas un tableau
+      bestShows: [] // ← tableau pour stocker tous les documents
     };
   }
 
   componentDidMount() {
     console.log("componentDidMount success");
-    axios.get('/api/data')
+    axios.get('/api/data') // vérifie que l'URL correspond à ton endpoint
       .then(res => {
-        console.log("data recieved: ", res.data);
-        const firstItem = (res.data && res.data.length > 0) ? res.data[0] : {};
-        this.setState({ bestShows: firstItem });
+        console.log("data received: ", res.data);
+        this.setState({ bestShows: res.data }); // ← stocke tout le tableau
       })
       .catch(err => {
         alert("Erreur lors de la récupération des données");
@@ -26,23 +25,25 @@ class App extends React.Component {
 
   render() {
     const { bestShows } = this.state;
-    console.log("render bestShows: ", bestShows);
-
-    const isValidData = bestShows && typeof bestShows === "object";
 
     return (
       <div>
         <h1>azure-mern-demo</h1>
         <ul>
-          {
-            isValidData && Object.keys(bestShows).length > 0 ? (
-              Object.keys(bestShows).map((cur, idx) => (
-                <li key={idx}>{cur} - {bestShows[cur]}</li>
-              ))
-            ) : (
-              <li>No data available</li>
-            )
-          }
+          {bestShows.length > 0 ? (
+            bestShows.map((show, idx) => (
+              <li key={idx}>
+                <strong>Document {idx + 1}</strong>
+                <ul>
+                  {Object.entries(show).map(([key, value]) => (
+                    <li key={key}>{key}: {String(value)}</li>
+                  ))}
+                </ul>
+              </li>
+            ))
+          ) : (
+            <li>No data available</li>
+          )}
         </ul>
       </div>
     );
